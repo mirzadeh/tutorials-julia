@@ -14,7 +14,7 @@ void relax(double *u, double *unew) {
 
 	for (i = 1; i < nx-1; i++) {
 		for (j = 1; j  < ny-1; j++) {
-			unew[index(i,j)] = 0.25 * ( u[index(i-1, j)] + u[index(i+1, j)] + 
+			unew[index(i,j)] = 0.25 * ( u[index(i-1, j)] + u[index(i+1, j)] +
 										u[index(i, j-1)] + u[index(i, j+1)] );
 		}
 	}
@@ -43,7 +43,7 @@ void solve(double *u, double *unew) {
 	double err = 1;
 	int it = 1;
 	double *utmp;
-	
+
 	while (err > tol) {
 		relax(u, unew);
 		err = absdiff(u, unew);
@@ -57,8 +57,8 @@ void solve(double *u, double *unew) {
 
 int main() {
 	int i, j;
-	double *u    = malloc(nx*ny*sizeof(double));
-	double *unew = malloc(nx*ny*sizeof(double));
+	double *u    = calloc(nx*ny, sizeof(double));
+	double *unew = calloc(nx*ny, sizeof(double));
 
 	boundary(u);
 	boundary(unew);
