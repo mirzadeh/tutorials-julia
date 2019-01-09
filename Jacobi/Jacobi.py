@@ -1,5 +1,5 @@
 import numpy as np
-from numba import autojit
+from numba import jit
 
 def relax_numpy(u):
 	unew = u.copy()	
@@ -7,7 +7,7 @@ def relax_numpy(u):
 
 	return unew
 
-@autojit
+@jit
 def relax_loop(u):
 	nx, ny = u.shape
 	unew = u.copy()
@@ -30,8 +30,11 @@ def solve(u, relax = relax_numpy, tol = 1e-6):
 	return u
 
 def run():
-	u = np.zeros((300, 300))
+	u = np.zeros((250, 250))
 	u[:,-1] = 1;
-	u = solve(u, relax=relax_numpy)
+	u = solve(u, relax=relax_loop)
 
+import timeit
+t = timeit.default_timer()
 run()
+print('Took {} seconds'.format(timeit.default_timer() - t))
