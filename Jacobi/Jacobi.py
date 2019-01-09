@@ -4,7 +4,7 @@ from numba import jit
 def relax_numpy(u, unew):
 	unew[1:-1, 1:-1] = 0.25 * (u[:-2, 1:-1] + u[2:, 1:-1] + u[1:-1, :-2] + u[1:-1, 2:])
 
-@jit(nopython=True, fastmath=True)
+@jit
 def relax_loop(u, unew):
 	nx, ny = u.shape
 	for i in range(1, nx-1):
@@ -24,7 +24,7 @@ def solve(u, relax = relax_numpy, tol = 1e-6):
 	print('took {0} iterations with err = {1:1.5e}'.format(it, err))
 
 def run():
-	u = np.zeros((250, 250))
+	u = np.zeros((100, 100))
 	u[:,-1] = 1;
 	solve(u, relax=relax_loop)
 

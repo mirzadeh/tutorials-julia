@@ -28,7 +28,7 @@ function solve(u, tol = 1e-6)
 end
 
 function run()
-	u = zeros(250, 250)
+	u = zeros(100, 100)
 	u[:, end] .= 1;
 	solve(u)
 end

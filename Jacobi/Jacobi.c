@@ -3,8 +3,8 @@
 #include <math.h>
 #include <time.h>
 
-#define nx 250
-#define ny 250
+#define nx 100
+#define ny 100
 #define tol 1e-6
 #define max(a, b) a > b ? a : b;
 #define index(i, j) (i)*ny + j
