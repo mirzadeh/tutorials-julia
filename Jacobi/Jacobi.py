@@ -1,5 +1,6 @@
 import numpy as np
 from numba import jit
+import relax_ctypes
 
 def relax_numpy(u, unew):
 	unew[1:-1, 1:-1] = 0.25 * (u[:-2, 1:-1] + u[2:, 1:-1] + u[1:-1, :-2] + u[1:-1, 2:])
@@ -24,9 +25,9 @@ def solve(u, relax = relax_numpy, tol = 1e-6):
 	print('took {0} iterations with err = {1:1.5e}'.format(it, err))
 
 def run():
-	u = np.zeros((100, 100))
+	u = np.zeros((200, 200))
 	u[:,-1] = 1;
-	solve(u, relax=relax_loop)
+	solve(u, relax=relax_ctypes.relax)
 
 if __name__ == '__main__':
 	import timeit

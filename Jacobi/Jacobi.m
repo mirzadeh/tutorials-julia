@@ -12,9 +12,9 @@ function unew = relax_loop(u)
 	nx = size(u,1);
     ny = size(u,2);
     unew = u;
-
-	for i = 2:nx-1
-		for j = 2:ny-1
+    
+    for i = 2:nx-1		
+        for j = 2:ny-1
 			unew(i, j) = 0.25*(u(i-1, j) + u(i+1, j) + u(i, j-1) + u(i, j+1));
 		end
 	end
@@ -24,19 +24,19 @@ function solve(u)
 	err = 1;
     tol = 1e-6;
 	it = 1;
-	while err > tol
-		unew = relax_loop(u);
+    while err > tol
+		unew = relax_mex(u);
 		err = max(max(abs(u - unew)));
 		u = unew;
 
         it = it + 1;
-	end
-
+    end
+    
 	fprintf("took %d iterations with err = %1.5e\n", it, err)
 end
 
 function run()
-	u = zeros(100, 100);
+	u = zeros(200, 200);
 	u(:, end) = 1;
-	solve(u)
+	solve(u)    
 end

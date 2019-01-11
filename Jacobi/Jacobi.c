@@ -2,23 +2,13 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+#include "jacobi_kernel.h"
 
-#define nx 100
-#define ny 100
+#define nx 200
+#define ny 200
 #define tol 1e-6
-#define max(a, b) a > b ? a : b;
-#define index(i, j) (i)*ny + j
-
-void relax(double *u, double *unew) {
-	int i,j;
-
-	for (i = 1; i < nx-1; i++) {
-		for (j = 1; j  < ny-1; j++) {
-			unew[index(i,j)] = 0.25 * ( u[index(i-1, j)] + u[index(i+1, j)] +
-										u[index(i, j-1)] + u[index(i, j+1)] );
-		}
-	}
-}
+#define index(i,j) (i)*ny + j
+#define max(a, b) a > b ? a : b
 
 void boundary(double *u) {
 	int i;
@@ -45,7 +35,7 @@ void solve(double *u, double *unew) {
 	double *utmp;
 
 	while (err > tol) {
-		relax(u, unew);
+		relax(u, unew, nx, ny);
 		err = absdiff(u, unew);
 
 		utmp = u; u = unew; unew = utmp;

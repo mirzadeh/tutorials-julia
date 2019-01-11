@@ -13,6 +13,11 @@ function relax_loop(u, unew)
 	end
 end
 
+function relax_c(u, unew)
+	nx, ny = size(u)
+	ccall((:relax, "libjacobi"), Cvoid, (Ref{Float64}, Ref{Float64}, Int32, Int32), u, unew, nx, ny)
+end
+
 function solve(u, tol = 1e-6)
 	err = 1
 	it = 1
@@ -28,7 +33,7 @@ function solve(u, tol = 1e-6)
 end
 
 function run()
-	u = zeros(100, 100)
+	u = zeros(200, 200)
 	u[:, end] .= 1;
 	solve(u)
 end
