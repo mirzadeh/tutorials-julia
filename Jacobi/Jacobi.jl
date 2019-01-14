@@ -23,7 +23,7 @@ function solve(u, tol = 1e-6)
 	it = 1
 	unew = copy(u)
 	while err > tol
-		relax_loop(u, unew)
+		relax(u, unew)
 		err = maximum(abs.(u - unew))
 		u, unew = unew, u
 		it += 1
@@ -38,4 +38,5 @@ function run()
 	solve(u)
 end
 
-@time run()
+using BenchmarkTools
+@btime run()
