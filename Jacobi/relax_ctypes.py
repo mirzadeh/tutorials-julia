@@ -7,7 +7,7 @@ double_ptr_t = npct.ndpointer(dtype=np.double, ndim=2)
 int_t =  ctypes.c_int
 
 # load the library
-libjacobi = npct.load_library('libjacobi', '.')
+libjacobi = npct.load_library('libjacobi.so', '.')
 libjacobi.relax.restype = None
 libjacobi.relax.argtypes = [double_ptr_t, double_ptr_t, int_t, int_t]
 
