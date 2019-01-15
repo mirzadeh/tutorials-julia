@@ -23,14 +23,26 @@ def absdiff(u, unew):
 
 	return du
 
+@jit
+def relax_loop_diff(u, unew):
+	nx, ny = u.shape
+	du = 0
+	for i in range(1, nx-1):
+		for j in range(1, ny-1):
+			unew[i, j] = 0.25 * (u[i-1, j] + u[i+1, j] + u[i, j-1] + u[i, j+1])
+			du = max(du, abs(u[i,j] - unew[i,j]))
+
+	return du
+
 def solve(u, relax = relax_numpy, tol = 1e-6):
 	err = 1
 	it = 1
 	unew = u.copy()
 	while err > tol:
-		relax(u, unew)
+		err = relax_loop_diff(u, unew)
+		# relax(u, unew)
 		# err = np.max(np.abs(u - unew))
-		err = absdiff(u, unew)
+		# err = absdiff(u, unew)
 		u, unew = unew, u
 		it += 1
 
